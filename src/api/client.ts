@@ -249,7 +249,13 @@ export class N8nApiClient {
    */
   async activateWorkflow(id: string): Promise<any> {
     try {
-      const response = await this.axiosInstance.post(`/workflows/${id}/activate`);
+      // Pass empty string body and strip Content-Type header to avoid 415 errors
+      // from n8n API which rejects Content-Type: application/json on bodyless POST endpoints
+      const response = await this.axiosInstance.post(
+        `/workflows/${id}/activate`,
+        '',
+        { headers: { 'Content-Type': undefined } }
+      );
       return response.data;
     } catch (error) {
       throw handleAxiosError(error, `Failed to activate workflow ${id}`);
@@ -264,7 +270,13 @@ export class N8nApiClient {
    */
   async deactivateWorkflow(id: string): Promise<any> {
     try {
-      const response = await this.axiosInstance.post(`/workflows/${id}/deactivate`);
+      // Pass empty string body and strip Content-Type header to avoid 415 errors
+      // from n8n API which rejects Content-Type: application/json on bodyless POST endpoints
+      const response = await this.axiosInstance.post(
+        `/workflows/${id}/deactivate`,
+        '',
+        { headers: { 'Content-Type': undefined } }
+      );
       return response.data;
     } catch (error) {
       throw handleAxiosError(error, `Failed to deactivate workflow ${id}`);

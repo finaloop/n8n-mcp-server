@@ -132,7 +132,9 @@ export class N8nApiClient {
    */
   async getExecution(id: string): Promise<any> {
     try {
-      const response = await this.axiosInstance.get(`/executions/${id}`);
+      const response = await this.axiosInstance.get(`/executions/${id}`, {
+        params: { includeData: true },
+      });
       return response.data;
     } catch (error) {
       throw handleAxiosError(error, `Failed to fetch execution ${id}`);
